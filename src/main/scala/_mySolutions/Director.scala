@@ -6,15 +6,13 @@ package _mySolutions
 //    – a field lastName of type String
 //    – a field yearOfBirth of type Int
 //    – a method called name that accepts no parameters and returns the full name
-class Director(
-    val firstName: String,
-    val lastName: String,
-    val yearOfBirth: Int
+case class Director(
+     firstName: String,
+     lastName: String,
+     yearOfBirth: Int
 ) {
   def name = s"$firstName $lastName $yearOfBirth"
 
-  def copy(firstName: String, lastName: String, yearOfBirth: Int): Director =
-    new Director(firstName, lastName, yearOfBirth)
 }
 
 // Write a companion object for Director that should contain:
@@ -22,10 +20,7 @@ class Director(
 //      and returns a new Director;
 //    – a method older that accepts two Directors and returns the oldest of the two.
 object Director {
-  def apply(firstName: String, lastName: String, yearOfBirth: Int): Director =
-    new Director(firstName, lastName, yearOfBirth)
-
-  def older(directorN1: Director, directorN2: Director): Director =
+    def older(directorN1: Director, directorN2: Director): Director =
     if (directorN1.yearOfBirth < directorN2.yearOfBirth)
       directorN2
     else
@@ -39,29 +34,17 @@ object Director {
 //   – a field director of type Director
 //   – a method directorsAge that returns the age of the director at the time of release
 //   - a method isDirectedBy that accepts a Director as a parameter and returns a Boolean
-class Film(
-    val name: String,
-    val yearOfRelease: Int,
-    val imdbRating: Double,
-    val director: Director
+case class Film(
+     name: String,
+     yearOfRelease: Int,
+     imdbRating: Double,
+     director: Director
 ) {
-  def directorsAge(director: Director, film: Film): Int =
-    film.yearOfRelease - director.yearOfBirth
+  def directorsAge: Int =
+    yearOfRelease - director.yearOfBirth
 
   def isDirectedBy(director: Director): Boolean =
     this.director == director
-//      if (director == this.director)
-//        true
-//      else
-//        false
-
-  def copy(
-      name: String = "Natale",
-      yearOfRelease: Int = 1990,
-      imdbRating: Double = 10,
-      director: Director = someBody
-  ): Film =
-    new Film(name, yearOfRelease, imdbRating, director)
 
   val eastwood = new Director("Clint", "Eastwood", 1930)
   val mcTiernan = new Director("John", "McTiernan", 1951)
@@ -82,14 +65,6 @@ class Film(
 //    – a method oldestDirectorAtTheTime that accepts two Films
 //        and returns the Director who was oldest at the respective time of filming.
 object Film {
-  def apply(
-      name: String,
-      yearOfRelease: Int,
-      imdbRating: Double,
-      director: Director
-  ): Film =
-    new Film(name, yearOfRelease, imdbRating, director)
-
   def highestRating(filmN1: Film, filmN2: Film): Film =
     if (filmN1.imdbRating > filmN2.imdbRating)
       filmN1
@@ -100,8 +75,9 @@ object Film {
     film.yearOfRelease - film.director.yearOfBirth
 
   def oldestDirectorAtTheTime(filmN1: Film, filmN2: Film): Director =
-    if (ageAtTheTime(filmN1) > ageAtTheTime(filmN2))
+    if (filmN1.directorsAge > filmN2.directorsAge)
       filmN1.director
     else
       filmN2.director
 }
+
