@@ -17,6 +17,21 @@ class Director(
     new Director(firstName, lastName, yearOfBirth)
 }
 
+// Write a companion object for Director that should contain:
+//    – an apply method that accepts the same parameters as the constructor of the class
+//      and returns a new Director;
+//    – a method older that accepts two Directors and returns the oldest of the two.
+object Director {
+  def apply(firstName: String, lastName: String, yearOfBirth: Int): Director =
+    new Director(firstName, lastName, yearOfBirth)
+
+  def older(directorN1: Director, directorN2: Director): Director =
+    if (directorN1.yearOfBirth < directorN2.yearOfBirth)
+      directorN2
+    else
+      directorN1
+}
+
 // • Film should contain:
 //   - a field name of type String
 //   – a field yearOfRelease of type Int
@@ -58,5 +73,35 @@ class Film(
   val dieHard = new Film("Die Hard", 1988, 8.3, mcTiernan)
   val something = new Film("something", 1994, 10, someBody)
 
+}
 
+// Write a companion object for Film that should contain:
+//    – an apply method that accepts the same parameters as the constructor of the class
+//        and returns a new Film ;
+//    – a method highestRating that accepts two Films and returns the highest imdbRating of the two;
+//    – a method oldestDirectorAtTheTime that accepts two Films
+//        and returns the Director who was oldest at the respective time of filming.
+object Film {
+  def apply(
+      name: String,
+      yearOfRelease: Int,
+      imdbRating: Double,
+      director: Director
+  ): Film =
+    new Film(name, yearOfRelease, imdbRating, director)
+
+  def highestRating(filmN1: Film, filmN2: Film): Film =
+    if (filmN1.imdbRating > filmN2.imdbRating)
+      filmN1
+    else
+      filmN2
+
+  def ageAtTheTime(film: Film): Int =
+    film.yearOfRelease - film.director.yearOfBirth
+
+  def oldestDirectorAtTheTime(filmN1: Film, filmN2: Film): Director =
+    if (ageAtTheTime(filmN1) > ageAtTheTime(filmN2))
+      filmN1.director
+    else
+      filmN2.director
 }
