@@ -7,9 +7,9 @@ package _mySolutions
 //    – a field yearOfBirth of type Int
 //    – a method called name that accepts no parameters and returns the full name
 case class Director(
-     firstName: String,
-     lastName: String,
-     yearOfBirth: Int
+    firstName: String,
+    lastName: String,
+    yearOfBirth: Int
 ) {
   def name = s"$firstName $lastName $yearOfBirth"
 
@@ -20,7 +20,7 @@ case class Director(
 //      and returns a new Director;
 //    – a method older that accepts two Directors and returns the oldest of the two.
 object Director {
-    def older(directorN1: Director, directorN2: Director): Director =
+  def older(directorN1: Director, directorN2: Director): Director =
     if (directorN1.yearOfBirth < directorN2.yearOfBirth)
       directorN2
     else
@@ -35,10 +35,10 @@ object Director {
 //   – a method directorsAge that returns the age of the director at the time of release
 //   - a method isDirectedBy that accepts a Director as a parameter and returns a Boolean
 case class Film(
-     name: String,
-     yearOfRelease: Int,
-     imdbRating: Double,
-     director: Director
+    name: String,
+    yearOfRelease: Int,
+    imdbRating: Double,
+    director: Director
 ) {
   def directorsAge: Int =
     yearOfRelease - director.yearOfBirth
@@ -81,3 +81,17 @@ object Film {
       filmN2.director
 }
 
+// In this exercise we’re going to write a simulator of my Dad, the movie critic.
+//  It’s quite simple: any movie directed by Clint Eastwood gets a rating 10.0,
+//  any movie directed by John McTiernan gets a 7.0,
+//  while any other movie gets a 3.0.
+//  Implement an object called Dad with a method rate which accepts a Film and returns a Double.
+//  Use pattern matching.
+object Dad {
+  def rate(film: Film): Double =
+    film match {
+      case Film(_, _, _, Director("Clint", "Eastwood", _)) => 10.0
+      case Film(_, _, _, Director("John", "McTiernan", _)) => 7.0
+      case Film(_, _, _, Director(_, _, _))                => 3.0
+    }
+}
