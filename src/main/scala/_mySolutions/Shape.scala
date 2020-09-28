@@ -8,11 +8,13 @@ package _mySolutions
 //  In each case provide implementations of each of the three methods.
 //  Ensure that the main constructor parameters of each shape (e.g. the radius of the circle)
 //  are accessible as fields.
-trait Shape {
-  def sides: Int
-  def perimeter: Double
-  def area: Double
-}
+//trait Shape {
+//  def sides: Int
+//  def perimeter: Double
+//  def area: Double
+//}
+
+
 
 case class Circle(radius: Int) extends Shape {
   val sides: Int = 1
@@ -20,14 +22,37 @@ case class Circle(radius: Int) extends Shape {
   val area: Double = math.Pi * radius * radius
 }
 
-case class Rectangle(base: Double, height: Double) extends Shape {
+//case class Rectangle(base: Double, height: Double) extends Shape {
+//  val sides: Int = 4
+//  val perimeter: Double = (base * 2) + (height * 2)
+//  val area: Double = base * height
+//}
+//
+//case class Square(sideLenght: Int) extends Shape {
+//  val sides: Int = 4
+//  val perimeter: Double = sideLenght * 4
+//  val area: Double = sideLenght * sideLenght
+//}
+
+// The solution from the last exercise delivered three distinct types of shape.
+//  However, it doesn’t model the relationships between the three correctly.
+//  A Square isn’t just a Shape — it’s also a type of Rectangle where the width and
+//  height are the same.
+//  Refactor the solution to the last exercise so that Square and Rectangle are
+//  subtypes of a common type Rectangular.
+sealed trait Rectangular extends Shape {
+  def base: Double
+  def height: Double
   val sides: Int = 4
-  val perimeter: Double = (base * 2) + (height * 2)
-  val area: Double = base * height
+
+  override def area: Double = base * height
+  override def perimeter: Double = (base * 2) + (height * 2)
 }
 
-case class Square(sideLenght: Int) extends Shape {
-  val sides: Int = 4
-  val perimeter: Double = sideLenght * 4
-  val area: Double = sideLenght * sideLenght
+case class Square(sideLenght: Double) extends Rectangular{
+  val base: Double = sideLenght
+  val height: Double = sideLenght
 }
+
+case class Rectangle(base: Double, height: Double) extends Rectangular
+
