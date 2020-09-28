@@ -14,7 +14,34 @@ package _mySolutions
 //  def area: Double
 //}
 
+// Let’s revisit Shape:
+//  - First make Shape a sealed trait
+//  - Then write a singleton object called Draw with an apply method
+//    that takes a Shape as an argument and returns a description of it on the console.
+sealed trait Shape {
+  def sides: Int
+  def perimeter: Double
+  def area: Double
+}
 
+object Draw {
+  def apply(shape: Shape): String = {
+    shape match {
+      case Circle(radius) => s"Draw a circle of radius $radius cm"
+      case rectangular: Rectangular =>
+        rectangular match {
+          case Square(sideLength) =>
+            s"Draw a square with side length $sideLength cm"
+          case Rectangle(base, height) =>
+            s"Draw a rectangle of base $base cm, and height $height cm"
+        }
+    }
+  }
+
+  def main(args: Array[String]): Unit = {
+    println(apply(Circle(10)))
+  }
+}
 
 case class Circle(radius: Int) extends Shape {
   val sides: Int = 1
@@ -49,10 +76,9 @@ sealed trait Rectangular extends Shape {
   override def perimeter: Double = (base * 2) + (height * 2)
 }
 
-case class Square(sideLenght: Double) extends Rectangular{
+case class Square(sideLenght: Double) extends Rectangular {
   val base: Double = sideLenght
   val height: Double = sideLenght
 }
 
 case class Rectangle(base: Double, height: Double) extends Rectangular
-
