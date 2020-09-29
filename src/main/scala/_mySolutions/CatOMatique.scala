@@ -1,6 +1,6 @@
 package _mySolutions
 
-object CatOmaQue {
+object CatOMatique {
 
   object Oswald {
     val name = "Oswald"
@@ -28,7 +28,6 @@ object CatOmaQue {
       println(cat("Quentin", "Tabby and white", "Curry"))
     }
   }
-
 }
 
 // Square Dance!: define an object called calc with a method square that accepts a Double
@@ -36,9 +35,7 @@ object CatOmaQue {
 //  cube that cubes its input calling square as part of its result calcula on.
 
 object Calc {
-  def square(n: Double): Double =  n * n
+  def square(n: Double): Double = n * n
 
   def cube(n: Double): Double = square(n) * n
-
 }
-

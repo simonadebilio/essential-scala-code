@@ -22,28 +22,10 @@ sealed trait Shape {
   def sides: Int
   def perimeter: Double
   def area: Double
+  def color: Color
 }
 
-object Draw {
-  def apply(shape: Shape): String = {
-    shape match {
-      case Circle(radius) => s"Draw a circle of radius $radius cm"
-      case rectangular: Rectangular =>
-        rectangular match {
-          case Square(sideLength) =>
-            s"Draw a square with side length $sideLength cm"
-          case Rectangle(base, height) =>
-            s"Draw a rectangle of base $base cm, and height $height cm"
-        }
-    }
-  }
-
-  def main(args: Array[String]): Unit = {
-    println(apply(Circle(10)))
-  }
-}
-
-case class Circle(radius: Int) extends Shape {
+case class Circle(radius: Int, color: Color) extends Shape {
   val sides: Int = 1
   val perimeter: Double = math.Pi * (radius * 2)
   val area: Double = math.Pi * radius * radius
@@ -76,9 +58,96 @@ sealed trait Rectangular extends Shape {
   override def perimeter: Double = (base * 2) + (height * 2)
 }
 
-case class Square(sideLenght: Double) extends Rectangular {
-  val base: Double = sideLenght
-  val height: Double = sideLenght
+case class Square(sideLength: Double, color: Color) extends Rectangular {
+  val base: Double = sideLength
+  val height: Double = sideLength
 }
 
-case class Rectangle(base: Double, height: Double) extends Rectangular
+case class Rectangle(base: Double, height: Double, color: Color) extends Rectangular
+
+// Write a sealed trait Color to make our shapes more interesting.
+//    • give Color three properties for its RGB values;
+//    • create three predefined colours: Red, Yellow, and Pink;
+//    • provide a means for people to produce their own custom Colors with their own RGB values;
+//    • provide a means for people to tell whether any Color is “light” or “dark”.
+sealed trait Lightness
+object Dark extends Lightness
+object Light extends Lightness
+
+sealed trait Color {
+  def red: Int
+  def green: Int
+  def blue: Int
+
+  def lightness: Lightness
+}
+
+object Red extends Color {
+  override def red: Int = 255
+
+  override def green: Int = 0
+
+  override def blue: Int = 0
+
+  override def lightness: Lightness = Light
+}
+
+object Yellow extends Color {
+  override def red: Int = 255
+
+  override def green: Int = 255
+
+  override def blue: Int = 0
+
+  override def lightness: Lightness = Light
+}
+
+object Pink extends Color {
+  override def red: Int = 255
+
+  override def green: Int = 127
+
+  override def blue: Int = 127
+
+  override def lightness: Lightness = Light
+}
+
+case class CustomColor(red: Int, green: Int, blue: Int) extends Color {
+  override def lightness: Lightness =
+    if ((red >= 127 && green >= 127) ||
+        (red >= 127 && blue >= 127) ||
+        (green >= 127 && blue >= 127)) Light
+    else Dark
+}
+
+//  Finally, update the code for Draw.apply to print the colour of the argument
+//   as well as its shape and dimensions:
+//    • if the argument is a predefined colour, print that colour by name
+object Draw {
+  def apply(shape: Shape): String = {
+    shape match {
+      case Circle(radius, color) =>
+        s"Draw a ${Draw(color)} circle of radius $radius cm"
+      case rectangular: Rectangular =>
+        rectangular match {
+          case Square(sideLength, color) =>
+            s"Draw ${Draw(color)} a square with side length $sideLength cm"
+          case Rectangle(base, height, color) =>
+            s"Draw a ${Draw(color)} rectangle of base $base cm, and height $height cm"
+        }
+    }
+  }
+
+  def apply(color: Color): String = {
+    color match {
+      case Red => "red"
+      case Yellow => "yellow"
+      case Pink => "pink"
+      case CustomColor(red, green, blue) => " "
+    }
+  }
+
+  def main(args: Array[String]): Unit = {
+    println(Draw(Circle(10, Pink)))
+  }
+}
