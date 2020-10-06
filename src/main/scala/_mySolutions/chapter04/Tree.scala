@@ -1,4 +1,4 @@
-package _mySolutions
+package _mySolutions.chapter04
 
 // A binary tree of integers can be defined as follows:
 //  A Tree is a Node with a left and right Tree or a Leaf with an element of type Int.

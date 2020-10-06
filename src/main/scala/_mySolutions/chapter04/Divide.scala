@@ -1,4 +1,4 @@
-package _mySolutions
+package _mySolutions.chapter04
 
 // Create an object called "divide" with an apply method that accepts two Ints
 //  and returns DivisionResult . DivisionResult should be a sealed trait with

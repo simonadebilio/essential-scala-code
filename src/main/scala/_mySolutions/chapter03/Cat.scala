@@ -1,4 +1,4 @@
-package _mySolutions
+package _mySolutions.chapter03
 
 // Define a class Cat and then create an object for each cat
 case class Cat(colour: String = "colour", food: String = "food") {

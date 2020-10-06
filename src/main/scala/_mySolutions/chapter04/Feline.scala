@@ -1,4 +1,4 @@
-package _mySolutions
+package _mySolutions.chapter04
 
 // Demand for Cat Simulator 1.0 is exploding! For v2 we’re going to go beyond
 //  the domestic cat to model Tigers, Lions, and Panthers in addition to the Cat.

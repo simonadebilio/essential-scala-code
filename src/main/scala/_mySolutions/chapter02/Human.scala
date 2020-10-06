@@ -1,4 +1,4 @@
-package _mySolutions
+package _mySolutions.chapter02
 
 // Define an object called 'human' that contains fields called 'firstName' and
 //  'lastName'. Define a second object called 'alien' containing a method called

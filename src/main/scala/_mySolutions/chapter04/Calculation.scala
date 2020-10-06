@@ -1,9 +1,9 @@
-package _mySolutions
+package _mySolutions.chapter04
 
 // A calculation may succeed (with an Int result) or fail (with a String message).
 //  Implement this.
 sealed trait Calculation
-final case class Success(result: Int) extends Calculation
+final case class Success(result: Double) extends Calculation
 final case class Failure(reason: String) extends Calculation
 
 // Create a Calculator object. On Calculator define methods + and - that accept

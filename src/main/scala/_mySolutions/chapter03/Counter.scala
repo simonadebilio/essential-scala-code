@@ -1,4 +1,4 @@
-package _mySolutions
+package _mySolutions.chapter03
 
 // Implement a Counter class. The constructor should take an Int.
 //  The methods inc and dec should increment and decrement the counter respectively returning a new Counter .

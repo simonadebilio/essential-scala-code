@@ -1,4 +1,4 @@
-package _mySolutions
+package _mySolutions.chapter04
 
 // A traffic light is red, green, or yellow. Translate this description into Scala code.
 //sealed trait TrafficLight
@@ -31,16 +31,15 @@ package _mySolutions
 
 // Pattern matching:
 sealed trait TrafficLight {
-  def next: TrafficLight =
+  def next: TrafficLight = {
     this match {
-      case Green => Yellow
-      case Yellow => Red
-      case Red => Green
+      case GreenLight => YellowLight
+      case YellowLight => RedLight
+      case RedLight => GreenLight
     }
+  }
 }
 
-case object Green extends TrafficLight
-case object Yellow extends TrafficLight
-case object Red extends TrafficLight
-
-
+case object GreenLight extends TrafficLight
+case object YellowLight extends TrafficLight
+case object RedLight extends TrafficLight

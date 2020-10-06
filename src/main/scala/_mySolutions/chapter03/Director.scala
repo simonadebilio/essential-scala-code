@@ -1,4 +1,4 @@
-package _mySolutions
+package _mySolutions.chapter03
 
 // Write two classes, Director and Film , with fields and methods as follows:
 //  • Director should contain:

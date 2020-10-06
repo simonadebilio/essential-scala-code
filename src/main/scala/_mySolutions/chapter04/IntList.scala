@@ -1,6 +1,4 @@
-package _mySolutions
-
-import scala.annotation.tailrec
+package _mySolutions.chapter04
 
 // Define a method `length` that returns the length of the list.
 
@@ -14,11 +12,6 @@ object Operations {
       case End           => 0
       case Pair(_, tail) => 1 + length(tail)
     }
-
-//  @tailrec
-//  def tailrecLength(list: IntList): Int = {
-//
-//  }
 
   // Define a method to compute the product of the elements in an IntList.
   def product(list: IntList): Int = {

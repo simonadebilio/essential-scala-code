@@ -1,4 +1,4 @@
-package _mySolutions
+package _mySolutions.chapter04
 
 // Define a trait called Shape and give it three abstract methods:
 //    • sides returns the number of sides;

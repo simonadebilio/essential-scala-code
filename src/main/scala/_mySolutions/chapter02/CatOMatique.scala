@@ -1,4 +1,4 @@
-package _mySolutions
+package _mySolutions.chapter02
 
 object CatOMatique {
 

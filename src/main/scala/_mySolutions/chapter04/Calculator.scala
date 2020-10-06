@@ -1,12 +1,12 @@
-package _mySolutions
+package _mySolutions.chapter04
+
+import _mySolutions.chapter04
 
 // An Expression is an Addition, Subtraction, or a Number;
 // An Addition has a left and right Expression;
 // A Subtraction has a left and right Expression; or
 // A Number has a value of type Double .
-sealed trait Calculation
-final case class Success(result: Double) extends Calculation
-final case class Failure(reason: String) extends Calculation
+
 
 sealed trait Expression {
   // Now implement a method `eval` that converts an Expression to a Double.
@@ -16,48 +16,48 @@ sealed trait Expression {
     element match {
       case Addition(left, right) =>
         eval(left) match {
-          case Failure(reason) => Failure(reason)
+          case Failure(reason) => chapter04.Failure(reason)
           case Success(result1) =>
             eval(right) match {
-              case Success(result2) => Success(result1 + result2)
-              case Failure(reason)  => Failure(reason)
+              case Success(result2) => chapter04.Success(result1 + result2)
+              case Failure(reason)  => chapter04.Failure(reason)
             }
         }
 
       case Subtraction(left, right) =>
         eval(left) match {
-          case Failure(reason) => Failure(reason)
+          case Failure(reason) => chapter04.Failure(reason)
           case Success(result1) =>
             eval(right) match {
-              case Success(result2) => Success(result1 - result2)
-              case Failure(reason)  => Failure(reason)
+              case Success(result2) => chapter04.Success(result1 - result2)
+              case Failure(reason)  => chapter04.Failure(reason)
             }
         }
 
-      case Number(value) => Success(value)
+      case Number(value) => chapter04.Success(value)
 
       case Division(left, right) =>
         eval(left) match {
-          case Failure(reason) => Failure(reason)
+          case Failure(reason) => chapter04.Failure(reason)
           case Success(result1) =>
             eval(right) match {
-              case Failure(reason) => Failure(reason)
+              case Failure(reason) => chapter04.Failure(reason)
               case Success(result2) =>
                 if (result2 == 0)
-                  Failure("Division by zero")
+                  chapter04.Failure("Division by zero")
                 else
-                  Success(result1 / result2)
+                  chapter04.Success(result1 / result2)
             }
         }
       case SquareRoot(element) =>
         eval(element) match {
-          case Failure(reason) => Failure(reason)
+          case Failure(reason) => chapter04.Failure(reason)
           case Success(element) =>
             if (element < 0)
-              Failure("Square root of negative number")
+              chapter04.Failure("Square root of negative number")
             else
 //            Success(element /2)
-              Success(Math.sqrt(element))
+              chapter04.Success(Math.sqrt(element))
         }
     }
   }
