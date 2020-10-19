@@ -1,11 +1,9 @@
 package _mySolutions.chapter04
 
-import _mySolutions.chapter04
-
 // An Expression is an Addition, Subtraction, or a Number;
 // An Addition has a left and right Expression;
 // A Subtraction has a left and right Expression; or
-// A Number has a value of type Double .
+// A Number has a value of type Double.
 
 
 sealed trait Expression {
@@ -16,48 +14,48 @@ sealed trait Expression {
     element match {
       case Addition(left, right) =>
         eval(left) match {
-          case Failure(reason) => chapter04.Failure(reason)
+          case Failure(reason) => Failure(reason)
           case Success(result1) =>
             eval(right) match {
-              case Success(result2) => chapter04.Success(result1 + result2)
-              case Failure(reason)  => chapter04.Failure(reason)
+              case Success(result2) => Success(result1 + result2)
+              case Failure(reason)  => Failure(reason)
             }
         }
 
       case Subtraction(left, right) =>
         eval(left) match {
-          case Failure(reason) => chapter04.Failure(reason)
+          case Failure(reason) => Failure(reason)
           case Success(result1) =>
             eval(right) match {
-              case Success(result2) => chapter04.Success(result1 - result2)
-              case Failure(reason)  => chapter04.Failure(reason)
+              case Success(result2) => Success(result1 - result2)
+              case Failure(reason)  => Failure(reason)
             }
         }
 
-      case Number(value) => chapter04.Success(value)
+      case Number(value) => Success(value)
 
       case Division(left, right) =>
         eval(left) match {
-          case Failure(reason) => chapter04.Failure(reason)
+          case Failure(reason) => Failure(reason)
           case Success(result1) =>
             eval(right) match {
-              case Failure(reason) => chapter04.Failure(reason)
+              case Failure(reason) => Failure(reason)
               case Success(result2) =>
                 if (result2 == 0)
-                  chapter04.Failure("Division by zero")
+                  Failure("Division by zero")
                 else
-                  chapter04.Success(result1 / result2)
+                  Success(result1 / result2)
             }
         }
       case SquareRoot(element) =>
         eval(element) match {
-          case Failure(reason) => chapter04.Failure(reason)
+          case Failure(reason) => Failure(reason)
           case Success(element) =>
             if (element < 0)
-              chapter04.Failure("Square root of negative number")
+              Failure("Square root of negative number")
             else
 //            Success(element /2)
-              chapter04.Success(Math.sqrt(element))
+              Success(Math.sqrt(element))
         }
     }
   }
@@ -71,10 +69,10 @@ case class Number(value: Double) extends Expression
 //  Start by extending the abstract syntax tree to include representations
 //  for Division and SquareRoot.
 case class Division(left: Expression, right: Expression) extends Expression
-case class SquareRoot(element: Expression) extends Expression
+case class SquareRoot(value: Expression) extends Expression
 
-// Now we’re going to change eval to represent that a computation can fail.
-//  (Double uses NaN to indicate a computation failed, but we want to be helpful
-//   to the user and tell them why the computation failed.)
-//   Implement an appropriate algebraic data type, then change `eval`
-//   to return your result type.
+/*
+Now implement a method eval: Sum[String, Double] on Expression.
+Use flatMap and map on Sum and introduce any utility methods you see fit to
+make the code more compact.
+ */
