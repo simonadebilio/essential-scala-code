@@ -35,12 +35,12 @@ sealed trait NewIntList {
 case object NewEnd extends NewIntList
 final case class NewPair(hd: Int, tl: NewIntList) extends NewIntList
 
-object Main {
-  def main(args: Array[String]): Unit = {
-    val l = NewPair(1, NewPair(2, NewPair(3, NewEnd)))
-    println(s"Length: ${l.length}")
-  }
-}
+//object Main {
+//  def main(args: Array[String]): Unit = {
+//    val l = NewPair(1, NewPair(2, NewPair(3, NewEnd)))
+//    println(s"Length: ${l.length}")
+//  }
+//}
 
 // We started developing an abstraction over sum, length, and product which we sketched out as:
 //    def abstraction(end: Int, f: ???): Int =

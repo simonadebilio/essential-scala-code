@@ -9,15 +9,29 @@ package _mySolutions.chapter05
 //  stored in the list.
 
 sealed trait Result[A]
-case class Success[A](result: A) extends Result[A]
-case class Failure[A](reason: String) extends Result[A]
+case class Compute[A](result: A) extends Result[A]
+case class Error[A](reason: String) extends Result[A]
 
 sealed trait LinkedList[A] extends Result[A] {
+
+  // Implement a method `map`
+  def map[B](f: A => B): LinkedList[B] =
+    this match {
+      case End()        => End()
+      case Pair(hd, tl) => Pair(f(hd), tl.map(f))
+    }
+
+  // Implement a method `fold`
+  def fold[B](end: B, f: (A, B) => B): B =
+    this match {
+      case End()        => end
+      case Pair(hd, tl) => f(hd, tl.fold(end, f))
+    }
 
   // Implement `length`, returning the length of the LinkedList.
   def length: Int =
     this match {
-      case End() => 0
+      case End()         => 0
       case Pair(_, tail) => 1 + tail.length
     }
 
@@ -40,19 +54,33 @@ sealed trait LinkedList[A] extends Result[A] {
   //  you will need to do this), consider throwing an exception.
   //  Here is an example:
   //    throw new Exception("Bad things happened")
-   def applyOnIntList(item: Int): Result[A] =
+  def applyOnIntList(item: Int): Result[A] =
     this match {
       case Pair(head, tail) =>
         if (item == 0) {
-          Success(head)
+          Compute(head)
         } else {
           tail.applyOnIntList(item - 1)
         }
 
-      case End()
-          => Failure("Empty list")
-        }
+      case End() => Error("Empty list")
+    }
 }
 
 final case class End[A]() extends LinkedList[A]
 final case class Pair[A](head: A, tail: LinkedList[A]) extends LinkedList[A]
+
+/*
+Given the following list
+val list: LinkedList[Int] = Pair(1, Pair(2, Pair(3, End())))
+• double all the elements in the list;
+• add one to all the elements in the list; and
+• divide by three all the elements in the list.
+ */
+object Mapping {
+  val list: LinkedList[Int] = Pair(1, Pair(2, Pair(3, End())))
+
+  list.map(_ * 2)
+  list.map(_ + 1)
+  list.map(_ / 3)
+}
