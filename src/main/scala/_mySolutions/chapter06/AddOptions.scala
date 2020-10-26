@@ -117,11 +117,46 @@ Tip: Start by supporting just one operator before extending your method to other
     }
   }
 
+  def calculator2(operand1: String, operator: String, operand2: String): Unit = {
+    def readInt(input: String): Option[Int] = {
+      try {
+        Some(input.toInt)
+      } catch {
+        case _: NumberFormatException => None
+      }
+    }
+
+    def readOperator(input: String): Option[Int => Int => Option[Int]] =
+      input match {
+        case "+" => Some((i1: Int) => (i2: Int) => Some(i1 + i2))
+        case "-" => Some((i1: Int) => (i2: Int) => Some(i1 - i2))
+        case "*" => Some((i1: Int) => (i2: Int) => Some(i1 * i2))
+        case "/" => Some((i1: Int) => (i2: Int) => Some(i1 / i2))
+        case _   => None
+      }
+
+    val inputs: Option[(Int, Int, Int => Int => Option[Int])] = for {
+      o1 <- readInt(operand1)
+      o2 <- readInt(operand2)
+      op <- readOperator(operator)
+    } yield (o1, o2, op)
+
+    inputs match {
+      case Some((o1, o2, op)) =>
+        try {
+          println(op(o1)(o2))
+        } catch {
+          case e: ArithmeticException => println(s"Something went wrong when calculating: ${e.getMessage}")
+        }
+      case None => println("Something went wrong when reading inputs")
+    }
+  }
+
   def main(args: Array[String]): Unit = {
-    val operand1 = "1"
-    val operand2 = "0"
+    val operand1 = "10"
+    val operand2 = "2"
     val operator = "/"
 
-    calculator(operand1, operator, operand2)
+    calculator2(operand1, operator, operand2)
   }
 }
