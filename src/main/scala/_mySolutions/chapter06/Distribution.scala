@@ -41,6 +41,9 @@ case class Distribution[A](events: List[(A, Double)]) {
         }
     }).compact.normalize
   }
+
+  def discrete[B](events: List[(B,Double)]): Distribution[B] =
+    Distribution(events).compact.normalize
 }
 
 case object Distribution {
